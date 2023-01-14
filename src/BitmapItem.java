@@ -23,9 +23,6 @@ import java.io.IOException;
 public class BitmapItem extends SlideItem {
   private BufferedImage bufferedImage;
   private String imageName;
-  
-  protected static final String FILE = "File ";
-  protected static final String NOTFOUND = " not found";
 
 
   	//level indicates the item-level; name indicates the name of the file with the image
@@ -36,13 +33,8 @@ public class BitmapItem extends SlideItem {
 			bufferedImage = ImageIO.read(new File(imageName));
 		}
 		catch (IOException e) {
-			System.err.println(FILE + imageName + NOTFOUND) ;
+			System.err.println("File" + imageName + " not found") ;
 		}
-	}
-
-	//An empty bitmap item
-	public BitmapItem() {
-		this(0, null);
 	}
 
 	//Returns the filename of the image
@@ -51,19 +43,21 @@ public class BitmapItem extends SlideItem {
 	}
 
 	//Returns the bounding box of the image
-	public Rectangle getBoundingBox(Graphics g, ImageObserver observer, float scale, Style myStyle) {
-		return new Rectangle((int) (myStyle.indent * scale), 0,
-				(int) (bufferedImage.getWidth(observer) * scale),
-				((int) (myStyle.leading * scale)) + 
-				(int) (bufferedImage.getHeight(observer) * scale));
+	public Rectangle getBoundingBox(ImageData imageData) {
+		return new Rectangle((int) (imageData.getStyle().indent * imageData.getScale()), 0,
+				(int) (bufferedImage.getWidth(imageData.getImageObserver()) * imageData.getScale()),
+				((int) (imageData.getStyle().leading * imageData.getScale())) +
+				(int) (bufferedImage.getHeight(imageData.getImageObserver()) * imageData.getScale()));
 	}
 
 	//Draws the image
-	public void draw(int x, int y, float scale, Graphics g, Style myStyle, ImageObserver observer) {
-		int width = x + (int) (myStyle.indent * scale);
-		int height = y + (int) (myStyle.leading * scale);
-		g.drawImage(bufferedImage, width, height,(int) (bufferedImage.getWidth(observer)*scale),
-                (int) (bufferedImage.getHeight(observer)*scale), observer);
+	public void draw(ImageData imageData) {
+		int width = imageData.getX() + (int) (imageData.getStyleIndent() * imageData.getScale());
+		int height = imageData.getY() + (int) (imageData.getStyleLeading() * imageData.getScale());
+		imageData.getGraphics().drawImage(bufferedImage, width, height,
+				(int) (bufferedImage.getWidth(imageData.getImageObserver()) * imageData.getScale()),
+                (int) (bufferedImage.getHeight(imageData.getImageObserver()) * imageData.getScale()),
+				imageData.getImageObserver());
 	}
 
 	public String toString() {

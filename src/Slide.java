@@ -59,19 +59,24 @@ public class Slide {
 	}
 
 	//Draws the slide
-	public void draw(Graphics g, Rectangle area, ImageObserver view) {
-		float scale = getScale(area);
-	    int y = area.y;
+	public void draw(ImageData imageData) {
+
+		imageData.setScale(getScale(imageData.getRectangle()));
+	    imageData.setY(imageData.getRectangle().y);
+		imageData.setX(imageData.getRectangle().x);
+		int x = imageData.getRectangle().x;
 	//The title is treated separately
 	    SlideItem slideItem = new TextItem(0, getTitle());
 	    Style style = Style.getStyle(slideItem.getLevel());
-	    slideItem.draw(area.x, y, scale, g, style, view);
-	    y += slideItem.getBoundingBox(g, view, scale, style).height;
+		imageData.setStyle(style);
+	    slideItem.draw(imageData);
+	    imageData.setY(imageData.getY() + slideItem.getBoundingBox(imageData).height);
 	    for (int number=0; number<getSize(); number++) {
 	      slideItem = (SlideItem)getSlideItems().elementAt(number);
 	      style = Style.getStyle(slideItem.getLevel());
-	      slideItem.draw(area.x, y, scale, g, style, view);
-	      y += slideItem.getBoundingBox(g, view, scale, style).height;
+		  imageData.setStyle(style);
+	      slideItem.draw(imageData);
+		  imageData.setY(imageData.getY() + slideItem.getBoundingBox(imageData).height);
 	    }
 	  }
 

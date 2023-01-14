@@ -22,33 +22,12 @@ public class MenuController extends MenuBar {
 	
 	private Frame parent; //The frame, only used as parent for the Dialogs
 	private Presentation presentation; //Commands are given to the presentation
-	
-	private static final long serialVersionUID = 227L;
-	
-	protected static final String ABOUT = "About";
-	protected static final String FILE = "File";
-	protected static final String EXIT = "Exit";
-	protected static final String GOTO = "Go to";
-	protected static final String HELP = "Help";
-	protected static final String NEW = "New";
-	protected static final String NEXT = "Next";
-	protected static final String OPEN = "Open";
-	protected static final String PAGENR = "Page number?";
-	protected static final String PREV = "Prev";
-	protected static final String SAVE = "Save";
-	protected static final String VIEW = "View";
-	
-	protected static final String TESTFILE = "testPresentation.xml";
-	protected static final String SAVEFILE = "savedPresentation.xml";
-	
-	protected static final String IOEX = "IO Exception: ";
-	protected static final String LOADERR = "Load Error";
-	protected static final String SAVEERR = "Save Error";
 
+	//Menu objects
 	private MenuItem menuItem;
-	private Menu fileMenu = new Menu(FILE);
-	private Menu viewMenu = new Menu(VIEW);
-	private Menu helpMenu = new Menu(HELP);
+	private Menu fileMenu = new Menu(ControllerButton.FILE);
+	private Menu viewMenu = new Menu(ControllerButton.VIEW);
+	private Menu helpMenu = new Menu(ControllerButton.HELP);
 
 	public MenuController(Frame frame, Presentation pres) {
 		parent = frame;
@@ -75,7 +54,7 @@ public class MenuController extends MenuBar {
 
 	//help button in about menu
 	private void helpMenuAbout() {
-		helpMenu.add(menuItem = mkMenuItem(ABOUT));
+		helpMenu.add(menuItem = mkMenuItem(ControllerButton.ABOUT));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				AboutBox.show(parent);
@@ -85,10 +64,10 @@ public class MenuController extends MenuBar {
 
 	//go to button in view menu
 	private void viewMenuGoTo() {
-		viewMenu.add(menuItem = mkMenuItem(GOTO));
+		viewMenu.add(menuItem = mkMenuItem(ControllerButton.GOTO));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
-				String pageNumberStr = JOptionPane.showInputDialog((Object)PAGENR);
+				String pageNumberStr = JOptionPane.showInputDialog((Object) ControllerButton.PAGENR);
 				int pageNumber = Integer.parseInt(pageNumberStr);
 				presentation.setSlideNumber(pageNumber - 1);
 			}
@@ -97,7 +76,7 @@ public class MenuController extends MenuBar {
 
 	//previous button in view menu
 	private void viewMenuPrevious() {
-		viewMenu.add(menuItem = mkMenuItem(PREV));
+		viewMenu.add(menuItem = mkMenuItem(ControllerButton.PREV));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				presentation.prevSlide();
@@ -107,7 +86,7 @@ public class MenuController extends MenuBar {
 
 	//next button in view menu
 	private void viewMenuNext() {
-		viewMenu.add(menuItem = mkMenuItem(NEXT));
+		viewMenu.add(menuItem = mkMenuItem(ControllerButton.NEXT));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				presentation.nextSlide();
@@ -117,7 +96,7 @@ public class MenuController extends MenuBar {
 
 	//exit button in file menu
 	private void fileMenuExit() {
-		fileMenu.add(menuItem = mkMenuItem(EXIT));
+		fileMenu.add(menuItem = mkMenuItem(ControllerButton.EXIT));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				presentation.exit(0);
@@ -127,7 +106,7 @@ public class MenuController extends MenuBar {
 
 	//new button in file menu
 	private void fileMenuNew() {
-		fileMenu.add(menuItem = mkMenuItem(NEW));
+		fileMenu.add(menuItem = mkMenuItem(ControllerButton.NEW));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				presentation.clear();
@@ -138,17 +117,17 @@ public class MenuController extends MenuBar {
 
 	//open button in file menu
 	private void fileMenuOpen() {
-		fileMenu.add(menuItem = mkMenuItem(OPEN));
+		fileMenu.add(menuItem = mkMenuItem(ControllerButton.OPEN));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				presentation.clear();
 				Accessor xmlAccessor = new XMLAccessor();
 				try {
-					xmlAccessor.loadFile(presentation, TESTFILE);
+					xmlAccessor.loadFile(presentation, ControllerButton.TESTFILE);
 					presentation.setSlideNumber(0);
 				} catch (IOException exc) {
-					JOptionPane.showMessageDialog(parent, IOEX + exc,
-         			LOADERR, JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(parent, ControllerButton.IOEX + exc,
+							ControllerButton.LOADERR, JOptionPane.ERROR_MESSAGE);
 				}
 				parent.repaint();
 			}
@@ -157,15 +136,15 @@ public class MenuController extends MenuBar {
 
 	//save button in file menu
 	private void fileMenuSave() {
-		fileMenu.add(menuItem = mkMenuItem(SAVE));
+		fileMenu.add(menuItem = mkMenuItem(ControllerButton.SAVE));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Accessor xmlAccessor = new XMLAccessor();
 				try {
-					xmlAccessor.saveFile(presentation, SAVEFILE);
+					xmlAccessor.saveFile(presentation, ControllerButton.SAVEFILE);
 				} catch (IOException exc) {
-					JOptionPane.showMessageDialog(parent, IOEX + exc,
-							SAVEERR, JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(parent, ControllerButton.IOEX + exc,
+							ControllerButton.SAVEERR, JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
