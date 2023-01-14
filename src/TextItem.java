@@ -26,8 +26,6 @@ import java.util.ArrayList;
 
 public class TextItem extends SlideItem {
 	private String text;
-	
-	private static final String EMPTYTEXT = "No Text Given";
 
 //A textitem of int level with text string
 	public TextItem(int level, String string) {
@@ -51,9 +49,7 @@ public class TextItem extends SlideItem {
 	public Rectangle getBoundingBox(ImageData imageData) {
 		List<TextLayout> layouts = getLayouts(imageData);
 		int xsize = 0, ysize = (int) (imageData.getStyleLeading() * imageData.getScale());
-		Iterator<TextLayout> iterator = layouts.iterator();
-		while (iterator.hasNext()) {
-			TextLayout layout = iterator.next();
+		for (TextLayout layout : layouts) {
 			Rectangle2D bounds = layout.getBounds();
 			if (bounds.getWidth() > xsize) {
 				xsize = (int) bounds.getWidth();

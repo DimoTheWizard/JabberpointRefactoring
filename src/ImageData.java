@@ -12,22 +12,6 @@ public class ImageData {
 
     private float scale;
 
-    public ImageData(int x, int y, Graphics g, Style style, ImageObserver imageObserver, float scale){
-        this.x = x;
-        this.y = y;
-        this.g = g;
-        this.style = style;
-        this.imageObserver = imageObserver;
-        this.scale = scale;
-    }
-
-    public ImageData(Graphics g, Style style, ImageObserver imageObserver, float scale){
-        this.g = g;
-        this.style = style;
-        this.imageObserver = imageObserver;
-        this.scale = scale;
-    }
-
     public ImageData(Graphics g, Rectangle rectangle, ImageObserver imageObserver){
         this.g = g;
         this.imageObserver = imageObserver;
@@ -54,10 +38,6 @@ public class ImageData {
         return g;
     }
 
-    public void setGraphics(Graphics g) {
-        this.g = g;
-    }
-
     public Style getStyle() {
         return style;
     }
@@ -78,10 +58,6 @@ public class ImageData {
         return imageObserver;
     }
 
-    public void setImageObserver(ImageObserver imageObserver) {
-        this.imageObserver = imageObserver;
-    }
-
     public float getScale() {
         return scale;
     }
@@ -92,9 +68,5 @@ public class ImageData {
 
     public Rectangle getRectangle() {
         return rectangle;
-    }
-
-    public void setRectangle(Rectangle rectangle) {
-        this.rectangle = rectangle;
     }
 }

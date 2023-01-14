@@ -35,7 +35,7 @@ public class XMLAccessor extends Accessor {
     }
 
 	public void loadFile(Presentation presentation, String filename) throws IOException {
-		int slideNumber, itemNumber, max = 0, maxItems = 0;
+		int slideNumber, itemNumber, max, maxItems = 0;
 		try {
 			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();    
 			Document document = builder.parse(new File(filename)); //Create a JDOM document
@@ -57,7 +57,7 @@ public class XMLAccessor extends Accessor {
 					loadSlideItem(slide, item);
 				}
 			}
-		} 
+		}
 		catch (IOException iox) {
 			System.err.println(iox.toString());
 		}

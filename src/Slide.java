@@ -43,11 +43,6 @@ public class Slide {
 		append(new TextItem(level, message));
 	}
 
-	//Returns the SlideItem
-	public SlideItem getSlideItem(int number) {
-		return (SlideItem)items.elementAt(number);
-	}
-
 	//Return all the SlideItems in a vector
 	public Vector<SlideItem> getSlideItems() {
 		return items;
