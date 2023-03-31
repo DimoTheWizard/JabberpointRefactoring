@@ -18,20 +18,37 @@ import javax.swing.JOptionPane;
  * @version 1.5 2010/03/03 Sylvia Stuurman
  * @version 1.6 2014/05/16 Sylvia Stuurman
  */
-public class MenuController extends MenuBar {
-	
-	private Frame parent; //The frame, only used as parent for the Dialogs
-	private Presentation presentation; //Commands are given to the presentation
+public class MenuController implements AppController {
+
+	private static String ABOUT = "About";
+	private static String FILE = "File";
+	private static String EXIT = "Exit";
+	private static String GOTO = "Go to";
+	private static String HELP = "Help";
+	private static String NEW = "New";
+	private static String NEXT = "Next";
+	private static String OPEN = "Open";
+	private static String PAGE_NR = "Page number?";
+	private static String PREV = "Prev";
+	private static String SAVE = "Save";
+	private static String VIEW = "View";
+	private static String TESTFILE = "testPresentation.xml";
+	private static String SAVEFILE = "savedPresentation.xml";
+	private static String IOEX = "IO Exception: ";
+	private static String LOADERR = "Load Error";
+	private static String SAVEERR = "Save Error";
 
 	//Menu objects
-	private MenuItem menuItem;
 	private Menu fileMenu = new Menu(ControllerButton.FILE);
 	private Menu viewMenu = new Menu(ControllerButton.VIEW);
 	private Menu helpMenu = new Menu(ControllerButton.HELP);
 
-	public MenuController(Frame frame, Presentation pres) {
-		parent = frame;
-		presentation = pres;
+	public MenuController() {}
+
+	private void initialize(AppWindow app){
+
+		Presentation presentation = app.getPresentationComponent().getPresentation();
+		MenuItem menuItem;
 
 		//File menu
 		fileMenuSave();
@@ -49,7 +66,7 @@ public class MenuController extends MenuBar {
 
 		//Help menu
 		helpMenuAbout();
-		setHelpMenu(helpMenu);		//Needed for portability (Motif, etc.).
+		setHelpMenu(helpMenu);
 	}
 
 	//help button in about menu
@@ -153,5 +170,16 @@ public class MenuController extends MenuBar {
 	//Creating a menu-item
 	public MenuItem mkMenuItem(String name) {
 		return new MenuItem(name, new MenuShortcut(name.charAt(0)));
+	}
+
+	// Creating a menu-item
+	public MenuItem getNewMenuItem(String menuName) {
+		return new MenuItem(menuName, new MenuShortcut(menuName.charAt(0)));
+	}
+
+	@Override
+	public void connect	(AppWindow appWindow) {
+		this.initialize(appWindow);
+		appWindow.setMenuBar(this);
 	}
 }

@@ -27,7 +27,6 @@ import org.w3c.dom.NodeList;
 
 public class XMLAccessor extends Accessor {
 
-
 	private String getTitle(Element element, String tagName) {
     	NodeList titles = element.getElementsByTagName(tagName);
     	return titles.item(0).getTextContent();
