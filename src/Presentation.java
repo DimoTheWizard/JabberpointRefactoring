@@ -24,7 +24,6 @@ public class Presentation {
 	}
 
 	//METHODS
-
 	public void nextSlide(){
 		setCurrentSlideNumber(this.currentSlideNumber + 1);
 	}
@@ -42,7 +41,6 @@ public class Presentation {
 	}
 
 	//GETTERS AND SETTERS
-
 	public int getSlidesSize(){
 		return this.slides.size();
 	}

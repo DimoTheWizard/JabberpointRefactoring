@@ -35,17 +35,18 @@ public class MenuController extends MenuBar implements AppController {
 	protected static final String LOADERR = "Load Error";
 	protected static final String SAVEERR = "Save Error";
 
-
+	//CONSTRUCTOR
 	public MenuController() {
 	}
 
+	//METHODS
 	private void initialize(AppWindow application) {
 		Presentation presentation = application.getPresentationComponent().getPresentation();
 		MenuItem menuItem;
 
-		// File Menu ========================================================
+		//FILE MENU
 		Menu fileMenu = new Menu(FILE);
-		// Open (will open a static presentation)
+		//OPEN
 		fileMenu.add(menuItem = getNewMenuItem(OPEN));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
@@ -61,7 +62,7 @@ public class MenuController extends MenuBar implements AppController {
 			}
 		});
 
-		// New (will clear the current presentation)
+		//NEW
 		fileMenu.add(menuItem = getNewMenuItem(NEW));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
@@ -70,7 +71,7 @@ public class MenuController extends MenuBar implements AppController {
 			}
 		});
 
-		// Save
+		//SAVE
 		fileMenu.add(menuItem = getNewMenuItem(SAVE));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -86,7 +87,7 @@ public class MenuController extends MenuBar implements AppController {
 
 		fileMenu.addSeparator();
 
-		// Exit
+		//EXIT
 		fileMenu.add(menuItem = getNewMenuItem(EXIT));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
@@ -96,9 +97,9 @@ public class MenuController extends MenuBar implements AppController {
 		});
 		add(fileMenu);
 
-		// ========= View Menu ================================================
+		//VIEW MENU
 		Menu viewMenu = new Menu(VIEW);
-		// Next
+		//NEXT
 		viewMenu.add(menuItem = getNewMenuItem(NEXT));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
@@ -106,7 +107,7 @@ public class MenuController extends MenuBar implements AppController {
 			}
 		});
 
-		// Previous presentation.Slide
+		//PREVIOUS
 		viewMenu.add(menuItem = getNewMenuItem(PREV));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
@@ -114,7 +115,7 @@ public class MenuController extends MenuBar implements AppController {
 			}
 		});
 
-		// Go to slide
+		//GO TO
 		viewMenu.add(menuItem = getNewMenuItem(GOTO));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
@@ -125,9 +126,9 @@ public class MenuController extends MenuBar implements AppController {
 		});
 		add(viewMenu);
 
-		// === Help Menu =============================================================
+		//HELP MENU
 		Menu helpMenu = new Menu(HELP);
-		// About
+		//ABOUT
 		helpMenu.add(menuItem = getNewMenuItem(ABOUT));
 		menuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
@@ -135,11 +136,10 @@ public class MenuController extends MenuBar implements AppController {
 			}
 		});
 
-		//Needed for portability (Motif, etc.).
 		setHelpMenu(helpMenu);
 	}
 
-	// Creating a menu-item
+	//CREATE ITEM
 	public MenuItem getNewMenuItem(String menuName) {
 		return new MenuItem(menuName, new MenuShortcut(menuName.charAt(0)));
 	}

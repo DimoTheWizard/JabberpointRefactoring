@@ -22,8 +22,9 @@ public class KeyController extends KeyAdapter implements AppController{
 			case KeyEvent.VK_PAGE_DOWN, KeyEvent.VK_DOWN, KeyEvent.VK_ENTER, '+' -> presentation.nextSlide();
 			case KeyEvent.VK_PAGE_UP, KeyEvent.VK_UP, '-' -> presentation.prevSlide();
 			case 'q', 'Q' -> System.exit(0);
-			//Should not be reached
+			//No buttons pressed do nothing
 			default -> {
+				break;
 			}
 		}
 	}
