@@ -27,25 +27,25 @@ import java.util.ArrayList;
 public class TextItem extends SlideItem {
 	private String text;
 
-//A textitem of int level with text string
+	//A textitem of int level with text string
 	public TextItem(int level, String string) {
 		super(level);
 		text = string;
 	}
 
-//Returns the text
+	//Returns the text
 	public String getText() {
 		return text == null ? "" : text;
 	}
 
-//Returns the AttributedString for the Item
+	//Returns the AttributedString for the Item
 	public AttributedString getAttributedString(ImageData imageData) {
 		AttributedString attrStr = new AttributedString(getText());
 		attrStr.addAttribute(TextAttribute.FONT, imageData.getStyle().getFont(imageData.getScale()), 0, text.length());
 		return attrStr;
 	}
 
-//Returns the bounding box of an Item
+	//Returns the bounding box of an Item
 	public Rectangle getBoundingBox(ImageData imageData) {
 		List<TextLayout> layouts = getLayouts(imageData);
 		int xsize = 0, ysize = (int) (imageData.getStyleLeading() * imageData.getScale());
@@ -62,7 +62,7 @@ public class TextItem extends SlideItem {
 		return new Rectangle((int) (imageData.getStyleIndent() * imageData.getScale()), 0, xsize, ysize );
 	}
 
-//Draws the item
+	//Draws the item
 	public void draw(ImageData imageData) {
 		if (text == null || text.length() == 0) {
 			return;
@@ -85,7 +85,7 @@ public class TextItem extends SlideItem {
     	Graphics2D g2d = (Graphics2D) imageData.getGraphics();
     	FontRenderContext frc = g2d.getFontRenderContext();
     	LineBreakMeasurer measurer = new LineBreakMeasurer(attrStr.getIterator(), frc);
-    	float wrappingWidth = (Slide.WIDTH - imageData.getStyleIndent()) * imageData.getScale();
+    	float wrappingWidth = (AppWindow.WIDTH - imageData.getStyleIndent()) * imageData.getScale();
     	while (measurer.getPosition() < getText().length()) {
     		TextLayout layout = measurer.nextLayout(wrappingWidth);
     		layouts.add(layout);

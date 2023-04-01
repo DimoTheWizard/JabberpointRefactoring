@@ -1,7 +1,8 @@
 import java.awt.*;
-import java.net.ProxySelector;
+import javax.swing.*;
 
-public class PresentationComponent {
+
+public class PresentationComponent extends JComponent{
     private Font labelFont;
     private Presentation presentation;
     private Style[] styles;
@@ -38,7 +39,7 @@ public class PresentationComponent {
     }
 
     //Draws the slide based on the graphics
-    public void drawComponent(Graphics graphics){
+    public void paintComponent(Graphics graphics){
         this.repaint();
         Slide slide = this.presentation.getCurrentSlide();
 
@@ -51,30 +52,33 @@ public class PresentationComponent {
 
         graphics.setFont(this.labelFont);
         graphics.setColor(COLOR);
-        graphics.drawString("Slide " + (1 + this.presentation.getSlideNumber()) + " of " + this.presentation.getSlideAmount(), TEXTXPOS, TEXTYPOS);
+        graphics.drawString("Slide " + (1 + this.presentation.getCurrentSlideNumber()) + " of " + this.presentation.getSlidesSize(), TEXTXPOS, TEXTYPOS);
 
-        Rectangle area = new Rectangle(0, TEXTYPOS, getWidth(), (getHeight() - TEXTYPOS));
+        Rectangle rectangle = (new Rectangle(0, TEXTYPOS, getWidth(), (getHeight() - TEXTYPOS)));;
 
-        this.drawSlide(slide, graphics, area);
+        this.drawSlide(slide, new ImageData(graphics, rectangle, this));
     }
 
     //draws all slides with their appropriate styles
-    private void drawSlide(Slide slide, Graphics graphics, Rectangle area){
-        float scale = getScale(area);
-        int y = area.y;
-
+    private void drawSlide(Slide slide, ImageData imageData){
         SlideItem slideItem = new TextItem(0, slide.getTitle());
         Style style = this.getStyle(slideItem.getLevel());
-        slideItem.draw(area.x, y, scale, graphics, style);
-        y += slideItem.getBoundingBox(graphics, scale, style).height;
+
+        imageData.setScale(getScale(imageData.getRectangle()));
+        imageData.setStyle(style);
+
+        SlideItem textSlideItem = new TextItem(0, slide.getTitle());
+        textSlideItem.draw(imageData);
+        imageData.setY(imageData.getY() + textSlideItem.getBoundingBox(imageData).height);
 
         for(SlideItem item : slide.getSlideItems()) {
             if(item instanceof BitmapItem){
                 ((BitmapItem) item).setImageObserver(this);
             }
             style = this.getStyle(item.getLevel());
-            item.draw(area.x, y, scale, graphics, style);
-            y += item.getBoundingBox(graphics, scale, style).height;
+            imageData.setStyle(style);
+            item.draw(imageData);
+            imageData.setY(imageData.getY() + item.getBoundingBox(imageData).height);
         }
     }
 

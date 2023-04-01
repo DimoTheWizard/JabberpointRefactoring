@@ -3,20 +3,22 @@ import java.awt.*;
 
 public class AppWindow extends JFrame {
     public static int WIDTH = 1024;
-    public static int HEIHHT = 768;
+    public static int HEIGHT = 768;
 
     private PresentationComponent presentationComponent;
     private Dimension dimension;
 
-    public AppWindow(string title, PresentationComponent presentationComponent){
+    //CONSTRUCTOR
+    public AppWindow(String title, PresentationComponent presentationComponent){
         super(title);
         this.presentationComponent = presentationComponent;
         this.dimension = new Dimension(WIDTH, HEIGHT);
     }
 
+    //METHODS
     //Initializes the user interface
     public void init(){
-        getContentPane().add((this.presentationComponent);
+        getContentPane().add(this.presentationComponent);
         this.setSize(this.dimension);
         this.setVisible(true);
     }

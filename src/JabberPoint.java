@@ -23,20 +23,30 @@ public class JabberPoint {
 
 	/** The main program */
 	public static void main(String[] argv) {
-		Style.createStyles();
-		Presentation presentation = new Presentation();
-		new SlideViewerFrame(JABVERSION, presentation);
+		PresentationComponent presentationComponent = new PresentationComponent();
+		AppWindow applicationWindow = new AppWindow(JABVERSION, presentationComponent);
+
+		//initialize all controllers
+		Controller controller = new Controller(applicationWindow);
+		MenuController menuController = new MenuController();
+		KeyController keyController = new KeyController();
+		controller.addController(menuController);
+		controller.addController(keyController);
+
+		//if argv is 0 launch the demo presentation else loadFile
 		try {
-			if (argv.length == 0) { //a demo presentation
-				Accessor.getDemoAccessor().loadFile(presentation, "");
+			if (argv.length == 0) {
+				Accessor.getDemoAccessor().loadFile(presentationComponent.getPresentation(), "");
 			} else {
-				new XMLAccessor().loadFile(presentation, argv[0]);
+				new XMLAccessor().loadFile(presentationComponent.getPresentation(), argv[0]);
 			}
-			presentation.setSlideNumber(0);
 		} catch (IOException ex) {
 			JOptionPane.showMessageDialog(null,
 					IOERR + ex, JABERR,
 					JOptionPane.ERROR_MESSAGE);
 		}
+
+		//after initializing the presenatation run it on the screen
+		controller.run();
 	}
 }

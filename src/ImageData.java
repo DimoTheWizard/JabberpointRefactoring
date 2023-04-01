@@ -58,6 +58,10 @@ public class ImageData {
         return imageObserver;
     }
 
+    public void setImageObserver(ImageObserver imageObserver) {
+        this.imageObserver = imageObserver;
+    }
+
     public float getScale() {
         return scale;
     }
@@ -69,4 +73,9 @@ public class ImageData {
     public Rectangle getRectangle() {
         return rectangle;
     }
+
+    public void setRectangle(Rectangle rectangle) {
+        this.rectangle = rectangle;
+    }
+
 }

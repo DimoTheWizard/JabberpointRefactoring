@@ -13,6 +13,7 @@ public class Controller {
         this.controllers.add(controller);
     }
 
+    //connects all the controllers to the main application window
     public void run() {
         appWindow.init();
 

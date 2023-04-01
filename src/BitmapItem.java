@@ -22,6 +22,7 @@ import java.io.IOException;
 
 public class BitmapItem extends SlideItem {
   private BufferedImage bufferedImage;
+  private ImageObserver imageObserver;
   private String imageName;
 
 
@@ -50,7 +51,12 @@ public class BitmapItem extends SlideItem {
 				(int) (bufferedImage.getHeight(imageData.getImageObserver()) * imageData.getScale()));
 	}
 
+	public void setImageObserver(ImageObserver imageObserver) {
+		this.imageObserver = imageObserver;
+	}
+
 	//Draws the image
+	@Override
 	public void draw(ImageData imageData) {
 		int width = imageData.getX() + (int) (imageData.getStyleIndent() * imageData.getScale());
 		int height = imageData.getY() + (int) (imageData.getStyleLeading() * imageData.getScale());

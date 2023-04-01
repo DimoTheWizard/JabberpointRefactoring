@@ -1,7 +1,4 @@
-import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.awt.image.ImageObserver;
-import java.util.Vector;
+import java.util.ArrayList;
 
 /** <p>A slide. This class has drawing functionality.</p>
  * @author Ian F. Darwin, ian@darwinsys.com, Gert Florijn, Sylvia Stuurman
@@ -14,23 +11,21 @@ import java.util.Vector;
  */
 
 public class Slide {
-	public final static int WIDTH = 1200;
-	public final static int HEIGHT = 800;
 	protected String title; //The title is kept separately
-	protected Vector<SlideItem> items; //The SlideItems are kept in a vector
+	protected ArrayList<SlideItem> items; //The SlideItems are kept in a vector
 
 	public Slide() {
-		items = new Vector<SlideItem>();
+		this.items = new ArrayList<SlideItem>();
 	}
 
 	//Add a SlideItem
-	public void append(SlideItem anItem) {
-		items.addElement(anItem);
+	public void append(SlideItem newItem) {
+		this.items.add(newItem);
 	}
 
 	//Return the title of a slide
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 
 	//Change the title of a slide
@@ -43,9 +38,13 @@ public class Slide {
 		append(new TextItem(level, message));
 	}
 
-	//Return all the SlideItems in a vector
-	public Vector<SlideItem> getSlideItems() {
-		return items;
+	//Return all the SlideItems in am arraylist
+	public ArrayList<SlideItem> getSlideItems() {
+		return this.items;
+	}
+
+	public SlideItem getSlideItem(int itemNum){
+		return this.items.get(itemNum);
 	}
 
 	//Returns the size of a slide
@@ -53,30 +52,4 @@ public class Slide {
 		return items.size();
 	}
 
-	//Draws the slide
-	public void draw(ImageData imageData) {
-
-		imageData.setScale(getScale(imageData.getRectangle()));
-	    imageData.setY(imageData.getRectangle().y);
-		imageData.setX(imageData.getRectangle().x);
-		int x = imageData.getRectangle().x;
-	//The title is treated separately
-	    SlideItem slideItem = new TextItem(0, getTitle());
-	    Style style = Style.getStyle(slideItem.getLevel());
-		imageData.setStyle(style);
-	    slideItem.draw(imageData);
-	    imageData.setY(imageData.getY() + slideItem.getBoundingBox(imageData).height);
-	    for (int number=0; number<getSize(); number++) {
-	      slideItem = (SlideItem)getSlideItems().elementAt(number);
-	      style = Style.getStyle(slideItem.getLevel());
-		  imageData.setStyle(style);
-	      slideItem.draw(imageData);
-		  imageData.setY(imageData.getY() + slideItem.getBoundingBox(imageData).height);
-	    }
-	  }
-
-	//Returns the scale to draw a slide
-	private float getScale(Rectangle area) {
-		return Math.min(((float)area.width) / ((float)WIDTH), ((float)area.height) / ((float)HEIGHT));
-	}
 }
